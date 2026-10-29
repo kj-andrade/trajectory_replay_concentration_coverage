@@ -6,14 +6,14 @@ Concentration & Coverage*  The paper is in
 currently being edited and the final version will be pushed to arXiv soon.
 
 When flow matching is trained on sequences, the best velocity field you can
-fit to a finite set of stored transitions (with no limit on model capacity) is
-a kernel-weighted average of those transitions. As the kernel sharpens, the
-average collapses onto one stored transition and the model just replays its
-training data. The paper separates two questions about this. The first is when
-replay happens. We show it is governed by a single concentration parameter,
-κ = d·V/σ², and sets in once κ passes a threshold of order log M, where M is
-the number of stored transitions. The second is whether avoiding replay is
-enough to predict well, and the answer is no. With a covariance that is
+fit to a finite set of stored transitions (assuming no limit on model capacity) is
+a kernel-weighted average of those transitions. As the kernel sharpens
+(i.e weight concentration), thevaverage collapses onto one stored transition 
+and the model just replays itsvtraining data. The paper separates two questions 
+about this. The first is whenvreplay happens. We show it is governed by a single 
+concentration parameter,κ = d·V/σ², and sets in once κ passes a threshold of order 
+log M, where M is the number of stored transitions. The second is whether avoiding 
+replay is enough to predict well, and the answer is no. With a covariance that is
 constant in flow time, the field always stays inside the convex hull of the
 stored velocity targets. That hull puts a floor on the error, and no bandwidth
 or covariance choice can get below it.
@@ -72,13 +72,13 @@ three experiments took about 35, 90 and 40 minutes. If you add `--quick`, each
 grid shrinks enough to finish in a few minutes, which is useful for checking
 that everything runs. The numbers it produces are not the ones in the paper.
 
-Each experiment writes `results/<name>/rows.csv` along with the resolved
+Each experiment creates `results/<name>/rows.csv` along with the resolved
 config, a `pip freeze` and timings. The plotting script only reads `rows.csv`,
-so you can redraw figures without rerunning anything. `scripts.verify`
+to ensure figures can be redrawn without reruns. `scripts.verify`
 re-checks the solver constraints and the Monte Carlo cross-checks against the
 saved rows. Simulated trajectories are cached in `results/cache`, which grows
-to a few GB. You can delete it at any time; the only cost is recomputing the
-trajectories on the next run.
+to a few GB. You can delete it at any time, subject to recomputing the trajectories 
+on the next run.
 
 ### Network experiment (Figs 5-7)
 
@@ -100,7 +100,7 @@ machine, raise the budget.
 ## Reproducibility
 
 Every random draw is keyed by system, seed and purpose through NumPy's
-`SeedSequence`. Results therefore don't depend on the order things run in,
+`SeedSequence`. Results are not dependent on the order things run in,
 and a run can be split across processes. Memory banks of different sizes are
 nested subsets of one permutation, so comparisons across bank size are
 paired. The query sets are fixed across bandwidths and covariance shapes.
@@ -111,7 +111,7 @@ min-max as the error bar. Ratios and differences are computed within each
 seed before aggregating. Thresholds and tolerances live in the config files
 and were fixed before the final runs.
 
-## Citation
+## Citation (will be updated soon)
 
 ```bibtex
 @misc{andrade2026replay,
