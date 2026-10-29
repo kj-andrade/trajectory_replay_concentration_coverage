@@ -1,9 +1,9 @@
 # Trajectory replay in sequential flow matching
 
 Code for the preprint *Trajectory Replay in Sequential Flow Matching:
-Concentration & Coverage* by Karan J. Andrade and Felipe Tobar (Imperial
-College London). The paper is in
-[`paper/`](paper/TrajReplayConcentrationCoverage_preprint.pdf).
+Concentration & Coverage*  The paper is in
+[`paper/`](paper/TrajReplayConcentrationCoverage_preprint.pdf). The paper is
+currently being edited and the final version will be pushed to arXiv soon.
 
 When flow matching is trained on sequences, the best velocity field you can
 fit to a finite set of stored transitions (with no limit on model capacity) is
