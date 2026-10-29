@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fm-replay"
+version = "0.1.0"
+description = "Experiments for 'Trajectory Replay in Sequential Flow Matching: Concentration & Coverage'"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = [
+    "numpy",
+    "scipy",
+    "matplotlib",
+    "pyyaml",
+]
+
+[project.optional-dependencies]
+networks = ["torch"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["fm_replay*"]

@@ -1,0 +1,48 @@
+# Settings for the three closed-form experiments (paper Sections 6.1-6.3).
+# Thresholds are declared here BEFORE the run and snapshotted next to the
+# results; nothing downstream may choose one after seeing the numbers.
+
+base_seed: 20260922
+seeds: [0, 1, 2, 3, 4]
+n_queries: 500
+flow_time: 0.5
+out: results
+cache: results/cache
+save_per_query: true
+
+# Declared tolerance for the matched-concentration test of E3.
+tol: 0.10
+
+# ---------------------------------------------------------------- E1
+onset:
+  # t = 0.5 is a KNOT for every even k (knots sit at m/k), where linear and
+  # cubic coincide exactly, so the interpolant comparison would be vacuous.
+  # 0.35 avoids the knots of k = 1, 2 and 4; both are swept and t is recorded
+  # on every row.
+  flow_times: [0.5, 0.35]
+  dims_l96: [8, 16, 32, 64, 128, 256]
+  dims_gauss: [8, 16, 32, 64, 128, 256, 512]
+  k_orders: [1, 2, 4]
+  M_main: 1000
+  M_onset: [10, 30, 100, 300, 1000, 3000, 10000]
+  onset_systems: ["Gauss-512", "L96-64-onset", "L96-256-onset"]
+  ess_level: 2.0
+  kappa_grid: {lo: 0.1, hi: 1000.0, n: 40}
+
+# ---------------------------------------------------------------- E2
+coverage:
+  grid:
+    - ["L63", [200, 2000, 20000]]
+    - ["L96-16", [2000, 20000]]
+    - ["L96-64", [2000, 20000]]
+  families: ["heldout", "isotropic-noise", "off-0.25", "off-1.0", "midpoint"]
+  # Upper end is hi_mult * 2 log M, so every bank size is swept equally deep.
+  kappa_grid: {lo: 0.3, hi_mult: 64, n: 20}
+
+# ---------------------------------------------------------------- E3
+anisotropy:
+  systems: ["L63", "L96-16", "L96-64", "L96-64-F5",
+            "L96-64-F4-bump", "L96-64-F4-cos"]
+  M: 20000
+  families: ["heldout", "off-0.25", "off-1.0", "midpoint"]
+  kappa_grid: {lo: 1.0, hi_mult: 16, n: 12}

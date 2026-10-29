@@ -1,0 +1,54 @@
+# Finite-capacity experiment (paper Section 6.4, Figs 5-7).
+#
+# Fixed before the run. Nothing downstream changes a value here after
+# seeing a result.
+
+# ---- run budget ---------------------------------------------------------
+# run_grid.py times a few steps first; if the full grid would exceed this,
+# it shrinks the grid (fewer seeds, then fewer steps, then fewer lambdas).
+# The paper's grid ran in about 2 h on CPU, so nothing was shrunk.
+TIME_BUDGET_HOURS: 3.0
+DEVICE: auto               # cuda if available, else cpu; float64 eval on cpu
+
+# ---- data ---------------------------------------------------------------
+system: L96-64             # Lorenz-96, F = 8, d = 64
+eval_seed: 0               # trajectory, bank, held-out windows and queries
+M: 2000
+n_queries: 500
+
+# ---- path and targets ---------------------------------------------------
+window_order: 1            # k = 1, pairwise transitions
+interpolant: linear
+sigma_constant_in_t: true
+
+# ---- bandwidth grid -----------------------------------------------------
+lambdas: [1, 4, 8, 16, 32] # lambda = kappa_hat / log M
+t_eval: [0.25, 0.5, 0.75]
+v_hat_at: 0.5              # V_hat is read at this flow time
+v_hat_mc_pairs: 20000      # Monte-Carlo cross-check of the closed form
+
+# ---- network ------------------------------------------------------------
+widths: [128, 512]
+n_freq: 16                 # emb(t) = [sin 2 pi k t, cos 2 pi k t], k = 1..16
+depth: 3                   # hidden layers
+
+# ---- training -----------------------------------------------------------
+steps: 50000
+batch: 512
+lr_peak: 1.0e-3
+lr_final: 1.0e-5
+warmup: 500
+grad_clip: 1.0
+checkpoints: [1000, 3000, 10000, 30000, 50000]
+seeds: [0, 1, 2]
+
+# ---- evaluation ---------------------------------------------------------
+query_sets: ["IN", "HO", "OFF"]   # quoted: bare OFF is a YAML 1.1 boolean
+off_family: "off-1.0"      # largest median D_t among the off-support
+                           # families at L96-64, M = 2000 (D_t = 2.56)
+excess_loss_samples: 65536
+escape_margin: 1.0e-6
+
+# ---- scheduling ---------------------------------------------------------
+concurrency: 6
+threads_per_proc: 2
