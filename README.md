@@ -8,9 +8,9 @@ currently being edited and the final version will be pushed to arXiv soon.
 When flow matching is trained on sequences, the best velocity field you can
 fit to a finite set of stored transitions (assuming no limit on model capacity) is
 a kernel-weighted average of those transitions. As the kernel sharpens
-(i.e weight concentration), thevaverage collapses onto one stored transition 
-and the model just replays itsvtraining data. The paper separates two questions 
-about this. The first is whenvreplay happens. We show it is governed by a single 
+(i.e weight concentration), the average collapses onto one stored transition 
+and the model just replays its training data. The paper separates two questions 
+about this. The first is when replay happens. We show it is governed by a single 
 concentration parameter,κ = d·V/σ², and sets in once κ passes a threshold of order 
 log M, where M is the number of stored transitions. The second is whether avoiding 
 replay is enough to predict well, and the answer is no. With a covariance that is
